@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class test1 : MonoBehaviour
+public class EasingTest : MonoBehaviour
 {   public enum SelectThis { Flash, InOutQuad,
         InBack,
         InBounce,
