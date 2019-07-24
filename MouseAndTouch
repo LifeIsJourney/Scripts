@@ -1,0 +1,92 @@
+	//if whan to check the swipe the change mouse down method to mouse up
+
+  public float moveThreshold = .01f   //or swipe threashold // min amount after which we can tell finger has moved
+  public enum WhichDirectionMouseIsMoving {LEFT,RIGHT,UP,DOWN,NONE}    //show the direction in the inspector
+	public  WhichDirectionMouseIsMoving whichDirectionMouseIsMoving;
+	public vector2 previousPos;
+         void Update()
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        previousPos = cam.ScreenToWorldPoint(Input.mousePosition);
+                       this.fingerDown = previousPos;
+                    }
+                    if (Input.GetMouseButton(0))
+                    {
+
+                        Vector2 pos = cam.ScreenToWorldPoint(Input.mousePosition);
+
+                        this.CheckMouseDirection((pos));
+
+                    }
+      
+                    foreach (Touch touch in Input.touches)
+                    {
+                        if (touch.phase == TouchPhase.Began)
+                        {
+                            this.fingerDown = (touch.position); 
+                            previousPos = (this.fingerDown);
+
+                        }
+                        if (touch.phase == TouchPhase.Moved)
+                        {
+                            this.fingerDown = touch.position;
+                            this.CheckMouseDirection((this.fingerDown));
+                        }
+                    }
+            }
+    }
+
+            //method responsible for check where mouse gone
+                  private void CheckMouseDirection(Vector2 mousePos)
+                        {  //take the first direction of the mouse move
+							if (moveVertical || moveHorizontal) return;
+							//minus previous from the current position	
+                            float deltaX = this.fingerDown.x - mousePos.x;
+                            float deltaY = this.fingerDown.y - mousePos.y;
+                            if ((Mathf.Abs(deltaX) > this.moveThreshold)) { moveHorizontal = true; }
+                            else if((Mathf.Abs(deltaY) > this.moveThreshold)) { moveVertical = true; }
+
+                            if (moveHorizontal)
+                            {
+                                Debug.Log("checking horizontal");
+                                if (deltaX > 0)
+                                {
+
+                                    whichDirectionMouseIsMoving = WhichDirectionMouseIsMoving.LEFT;
+
+                                    MoveRightAndUp();   //call your method here
+                                     Debug.Log("Left");
+
+                                }
+                                else if (deltaX < 0)
+                                {
+
+                                    whichDirectionMouseIsMoving = WhichDirectionMouseIsMoving.RIGHT;
+
+                                    MoveRightAndUp();//call your method here
+                                     Debug.Log("Right");
+                                }
+
+
+                            }
+                            else if (moveVertical)
+
+                                      {
+                                if (deltaY > 0)
+                                {
+                                    whichDirectionMouseIsMoving = WhichDirectionMouseIsMoving.DOWN;
+
+                                    MoveRightAndUp();  //call your method here
+                                    Debug.Log("down");
+                                }
+                                else if (deltaY < 0)
+                                {
+                                    whichDirectionMouseIsMoving = WhichDirectionMouseIsMoving.UP ;
+
+                                    MoveRightAndUp();     //call your method here
+                                    Debug.Log("up");
+                                }
+
+                            }
+                      }
