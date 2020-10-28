@@ -1,0 +1,7 @@
+FIREBASE DEBUG phone
+
+cd C:\Users\Creator\AppData\Local\Android\Sdk\platform-tools 
+
+adb devices 
+adb shell setprop debug.firebase.analytics.app <package name>
+adb shell setprop debug.firebase.analytics.app com.google.firebase.unity.analytics.testapp
