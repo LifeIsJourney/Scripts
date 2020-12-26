@@ -1,0 +1,1 @@
+ DOTween.To(() => myScore, x => myScore = x, Coins.GetCoinAmount(), 1f).OnUpdate(() => CoinText.text = myScore.ToString()).SetEase(Ease.InOutSine)
